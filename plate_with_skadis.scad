@@ -28,22 +28,10 @@ module skadis_slot(x) {
 }
 
 // rail (implicit union with the library's plate output):
-// open frame of perimeter walls + a slotted deck band centered on the slot row
+// FLUSH variant — solid 5mm strip, same height as the plate, slots cut through.
+// Standard Skadis hooks cannot mount (no cavity behind); slots serve custom
+// screw/twist-anchor accessories designed for a floor-backed board.
 difference() {
-    union() {
-        // perimeter walls, full rail height
-        difference() {
-            translate([X0, py, 0]) cube([X1 - X0, rail_d, cavity_h + deck]);
-            translate([X0 + wall, py + wall, -1]) cube([X1 - X0 - 2*wall, rail_d - 2*wall, 2 + cavity_h + deck]);
-        }
-        // deck band spanning wall to wall
-        translate([X0, yc - deck_d/2, cavity_h]) cube([X1 - X0, deck_d, deck]);
-    }
-    for (i = [0 : NSLOTS - 1]) translate([0, 0, cavity_h + deck/2]) skadis_slot(sx0 + i * pitch);
-}
-// ribs supporting the deck bridges (only under the deck band)
-for (i = [0 : NSLOTS]) {
-    rx = sx0 - pitch/2 + i * pitch;
-    if (rx > X0 + wall + rib/2 && rx < X1 - wall - rib/2)
-        translate([rx - rib/2, yc - deck_d/2, 0]) cube([rib, deck_d, cavity_h]);
+    translate([X0, py, 0]) cube([X1 - X0, rail_d, deck]);
+    for (i = [0 : NSLOTS - 1]) translate([0, 0, deck/2]) skadis_slot(sx0 + i * pitch);
 }
