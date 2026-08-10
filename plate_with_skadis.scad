@@ -20,18 +20,43 @@ py = gridy * 42 / 2;          // plate back edge (84 for gridy=4)
 yc = py + rail_d / 2;
 sx0 = (X0 + X1)/2 - (NSLOTS - 1) * pitch / 2;
 
+corner_r = 4;       // matches the gridfinity plate outer corner
+cham = 0.8;         // 45-degree top-edge chamfer, matches the gridfinity look
+
+module obround2d(x) {
+    translate([x, yc]) hull() {
+        translate([0, -(slot_l - slot_w)/2]) circle(d = slot_w, $fn = 48);
+        translate([0,  (slot_l - slot_w)/2]) circle(d = slot_w, $fn = 48);
+    }
+}
+
+// strip footprint: square front edge (mates the plate), R4 back corners
+module strip2d() {
+    hull() {
+        translate([X0, py]) square([X1 - X0, rail_d - corner_r]);
+        translate([X0 + corner_r, py + rail_d - corner_r]) circle(r = corner_r, $fn = 64);
+        translate([X1 - corner_r, py + rail_d - corner_r]) circle(r = corner_r, $fn = 64);
+    }
+}
+
+// slot cutter with a chamfered mouth
 module skadis_slot(x) {
-    translate([x, 0, 0]) hull() {
-        translate([0, yc - (slot_l - slot_w)/2, 0]) cylinder(h = 20, d = slot_w, center = true, $fn = 48);
-        translate([0, yc + (slot_l - slot_w)/2, 0]) cylinder(h = 20, d = slot_w, center = true, $fn = 48);
+    translate([0, 0, -1]) linear_extrude(deck + 2) obround2d(x);
+    hull() {
+        translate([0, 0, deck - cham]) linear_extrude(0.01) obround2d(x);
+        translate([0, 0, deck + 0.01]) linear_extrude(0.01) offset(r = cham) obround2d(x);
     }
 }
 
 // rail (implicit union with the library's plate output):
-// FLUSH variant — solid 5mm strip, same height as the plate, slots cut through.
+// FLUSH variant — solid 5mm strip level with the plate, slots cut through,
+// top perimeter chamfered and back corners rounded to match the gridfinity edges.
 // Standard Skadis hooks cannot mount (no cavity behind); slots serve custom
 // screw/twist-anchor accessories designed for a floor-backed board.
 difference() {
-    translate([X0, py, 0]) cube([X1 - X0, rail_d, deck]);
-    for (i = [0 : NSLOTS - 1]) translate([0, 0, deck/2]) skadis_slot(sx0 + i * pitch);
+    hull() {
+        linear_extrude(deck - cham) strip2d();
+        translate([0, 0, deck - 0.01]) linear_extrude(0.01) offset(r = -cham) strip2d();
+    }
+    for (i = [0 : NSLOTS - 1]) skadis_slot(sx0 + i * pitch);
 }
