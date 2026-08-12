@@ -41,3 +41,18 @@ openscad -o baseplate_right_4x4_fitted.stl \
 ```
 
 Gridfinity was created by [Zack Freedman](https://www.youtube.com/watch?v=ra_9zU-mnl8); any standard Gridfinity bin (Printables, MakerWorld, etc.) snaps onto these plates.
+
+## Drawer 3 — 454.5 × 386 mm, magnetic (A1 mini)
+
+`drawer3-magnetic/` — **10 × 9 grid** (90 squares) split into **9 plates** that each fit an A1 mini (180 mm bed). Skeletonized style, 9.35 mm tall, with pockets for **6 × 2 mm round magnets** (crush ribs + chamfer — press fit, no glue). Assembled size 454.0 × 385.5 mm (0.5 mm clearance).
+
+| Position | Grid | Size (mm) |
+|---|---|---|
+| Front/Back Left+Right (4 pcs) | 3×3 | 143 × 129.75 |
+| Front/Back Mid (2 pcs) | 4×3 | 168 × 129.75 |
+| Mid Left+Right (2 pcs) | 3×3 | 143 × 126 |
+| Mid Mid (1 pc) | 4×3 | 168 × 126 |
+
+`GRIDFINITY_MAG_DRAWER_A1MINI.3mf` — all 9 pieces as 9 plates in one A1-mini-native project. Full magnet population = 4 per square = **360 magnets**; populating only under bins that need hold is normal.
+
+Generated with gridfinity-rebuilt-openscad: `style_plate=2` (skeletonized), `enable_magnet=true`, fitted with `distancex/y` + `fitx/y` per piece (outer pieces carry the drawer padding: +17 mm on left/right columns, +3.75 mm on front/back rows).
