@@ -44,6 +44,14 @@ Gridfinity was created by [Zack Freedman](https://www.youtube.com/watch?v=ra_9zU
 
 ## Drawer 3 — 454.5 × 386 mm, magnetic (A1 mini)
 
+![Assembled](drawer3-magnetic/images/rotate.gif)
+
+| | |
+|---|---|
+| ![Assembly](drawer3-magnetic/images/assembly.png) | ![Exploded](drawer3-magnetic/images/exploded.png) |
+| ![Magnet pockets — crush ribs, no glue needed](drawer3-magnetic/images/magnet-pockets.png) | ![Top placement map](drawer3-magnetic/images/top-map.png) |
+
+
 `drawer3-magnetic/` — **10 × 9 grid** (90 squares) split into **9 plates** that each fit an A1 mini (180 mm bed). Skeletonized style, 9.35 mm tall, with pockets for **6 × 2 mm round magnets** (crush ribs + chamfer — press fit, no glue). Assembled size 454.0 × 385.5 mm (0.5 mm clearance).
 
 | Position | Grid | Size (mm) |
